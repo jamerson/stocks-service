@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.service.stocks.config.StocksConfiguration;
 import com.service.stocks.model.Stock;
 import com.service.stocks.repositories.StocksRepository;
 import com.service.stocks.services.exceptions.StockNotFoundException;
@@ -27,12 +29,12 @@ public class StocksServiceInMemoryImplTest {
 	@Autowired
 	private StocksRepository repository;
 	
+	@Autowired
+	private StocksConfiguration configuration;
+	
 	@Before
 	public void setup() {
-		repository.addAll(Arrays.asList(
-				new Stock(1, "Stock 1", 10, 0),
-				new Stock(2, "Stock 2", 20, 0),
-				new Stock(3, "Stock 3", 30, 0)));
+		repository.addAll(configuration.getLoad());
 		service = new StocksServiceInMemoryImpl(repository);
 	}
 	

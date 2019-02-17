@@ -2,6 +2,8 @@ package com.service.stocks.services;
 
 import java.util.Collection;
 import org.springframework.stereotype.Service;
+
+import com.service.stocks.config.StocksConfiguration;
 import com.service.stocks.model.Stock;
 import com.service.stocks.repositories.StocksRepository;
 import com.service.stocks.repositories.exceptions.InvalidIdException;

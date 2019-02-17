@@ -1,11 +1,18 @@
 stocks:
   name: test
   load:
-      - id: 1
+      stock1:  
+        id: 1
         name: Stock1
-        price: 10
-        timestamp: 0
-      - id: 2
+        currentPrice: 10
+        lastUpdate: 0
+      stock2: 
+        id: 2
         name: Stock2
-        price: 20
-        timestamp: 0
+        currentPrice: 20
+        lastUpdate: 0
+      stock3: 
+        id: 3
+        name: Stock3
+        currentPrice: 30
+        lastUpdate: 0
