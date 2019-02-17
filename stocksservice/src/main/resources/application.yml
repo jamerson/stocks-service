@@ -1,0 +1,11 @@
+stocks:
+  name: test
+  load:
+      - id: 1
+        name: Stock1
+        price: 10
+        timestamp: 0
+      - id: 2
+        name: Stock2
+        price: 20
+        timestamp: 0

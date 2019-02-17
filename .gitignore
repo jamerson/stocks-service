@@ -1,0 +1,12 @@
+.DS_Store
+.vscode
+!.mvn/wrapper/maven-wrapper.jar
+!url-shortener/target/url-shortener-0.0.1-SNAPSHOT.jar
+url-shortener/target/url-shortener-0.0.1-SNAPSHOT.jar.original
+*.class
+*.lst
+*.xml
+*.txt
+*.dump
+.recommenders
+.metadata
