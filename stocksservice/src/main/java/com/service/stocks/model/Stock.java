@@ -1,9 +1,16 @@
 package com.service.stocks.model;
 
-import org.springframework.data.redis.core.RedisHash;
+import java.io.Serializable;
 
-@RedisHash("stock")
-public class Stock {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Stock implements Serializable {
+	
+	private static final long serialVersionUID = -2468057406500509489L;
+	
+	@Id
 	private final long id;
 	private final String name;
 	private final double currentPrice;

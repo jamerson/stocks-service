@@ -36,7 +36,7 @@ public class StocksController {
 	
 	@PostConstruct
 	public void init() {
-		repository.addAll(configuration.getLoad());
+		repository.saveAll(configuration.getLoad());
 	}
 	
 	@GetMapping("/stocks")

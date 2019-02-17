@@ -1,6 +1,8 @@
 package com.service.stocks.services;
 
 import java.util.Collection;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.service.stocks.config.StocksConfiguration;
@@ -22,16 +24,13 @@ public class StocksServiceInMemoryImpl implements StocksService {
 
 	@Override
 	public Collection<Stock> getStocks() {
-		return repository.getAll();
+		return repository.findAll();
 	}
 
 	@Override
 	public Stock get(long id) throws StockNotFoundException {
-		try {
-			return repository.get(id);
-		} catch (InvalidIdException e) {
-			throw new StockNotFoundException();
-		}
+		return repository.findById(id).orElseThrow(StockNotFoundException::new);
+		
 	}
 
 	@Override
@@ -42,7 +41,7 @@ public class StocksServiceInMemoryImpl implements StocksService {
 			throw new InvalidStockException();
 		}
 		
-		return repository.add(stock);
+		return repository.save(stock);
 	}
 
 	@Override
