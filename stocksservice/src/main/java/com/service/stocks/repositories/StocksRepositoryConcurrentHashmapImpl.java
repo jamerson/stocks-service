@@ -11,7 +11,6 @@ import com.service.stocks.model.Stock;
 import com.service.stocks.repositories.exceptions.InvalidIdException;
 
 @Repository
-@Primary
 public class StocksRepositoryConcurrentHashmapImpl implements StocksRepository {
 	
 	private final ConcurrentHashMap<Long, Stock> stocks = new ConcurrentHashMap<>();
