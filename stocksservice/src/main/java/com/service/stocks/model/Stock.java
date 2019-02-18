@@ -1,9 +1,10 @@
 package com.service.stocks.model;
 
-import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.annotation.Id;
 
-@RedisHash("stock")
 public class Stock {
+	
+    @Id
 	private final long id;
 	private final String name;
 	private final double currentPrice;
