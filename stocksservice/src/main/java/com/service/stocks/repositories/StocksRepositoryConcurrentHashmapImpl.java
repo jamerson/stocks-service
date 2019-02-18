@@ -5,13 +5,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import com.service.stocks.model.Stock;
 import com.service.stocks.repositories.exceptions.InvalidIdException;
 
 @Repository
-@Primary
+@Profile("test")
 public class StocksRepositoryConcurrentHashmapImpl implements StocksRepository {
 	
 	private final ConcurrentHashMap<Long, Stock> stocks = new ConcurrentHashMap<>();

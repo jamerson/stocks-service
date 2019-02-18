@@ -5,6 +5,8 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,11 +14,11 @@ import com.service.stocks.model.Stock;
 import com.service.stocks.repositories.exceptions.InvalidIdException;
 
 @Repository
+@Profile("!test")
 public class StocksRepositoryMongoImpl implements StocksRepository {
 
 	private MongoTemplate mongoTemplate;
-	
-	
+		
 	public StocksRepositoryMongoImpl(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }

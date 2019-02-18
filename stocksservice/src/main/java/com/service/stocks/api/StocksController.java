@@ -23,20 +23,17 @@ import com.service.stocks.services.exceptions.StockNotFoundException;
 
 @RestController
 public class StocksController {
-
-	private StocksRepository repository;
 	private StocksService service;
 	private StocksConfiguration configuration;
 
-	public StocksController(StocksRepository repository, StocksService service, StocksConfiguration configuration) {
-		this.repository = repository;
+	public StocksController(StocksService service, StocksConfiguration configuration) {
 		this.service = service;
 		this.configuration = configuration;
 	}
 	
 	@PostConstruct
 	public void init() {
-		repository.addAll(configuration.getLoad());
+		service.addAll(configuration.getLoad());
 	}
 	
 	@GetMapping("/stocks")

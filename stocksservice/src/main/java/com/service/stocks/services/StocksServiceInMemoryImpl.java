@@ -44,6 +44,11 @@ public class StocksServiceInMemoryImpl implements StocksService {
 		
 		return repository.add(stock);
 	}
+	
+	@Override
+	public void addAll(Collection<Stock> stocks) {
+		repository.addAll(stocks);
+	}
 
 	@Override
 	public Stock save(Stock stock) throws StockNotFoundException, InvalidStockException {
@@ -59,5 +64,7 @@ public class StocksServiceInMemoryImpl implements StocksService {
 			throw new StockNotFoundException();
 		}
 	}
+
+	
 
 }

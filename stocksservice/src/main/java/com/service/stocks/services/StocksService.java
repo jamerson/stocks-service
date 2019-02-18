@@ -11,4 +11,5 @@ public interface StocksService {
 	Collection<Stock> getStocks();
 	Stock add(Stock stock) throws InvalidStockException;
 	Stock save(Stock stock) throws StockNotFoundException, InvalidStockException;
+	void addAll(Collection<Stock> load);
 }

@@ -12,14 +12,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.service.stocks.config.StocksConfiguration;
 import com.service.stocks.model.Stock;
 import com.service.stocks.repositories.StocksRepository;
+import com.service.stocks.repositories.StocksRepositoryConcurrentHashmapImpl;
 import com.service.stocks.services.exceptions.StockNotFoundException;
 import com.service.stocks.services.exceptions.InvalidStockException;;
 
+@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class StocksServiceInMemoryImplTest {
@@ -27,13 +30,11 @@ public class StocksServiceInMemoryImplTest {
 	private StocksService service;
 	
 	@Autowired
-	private StocksRepository repository;
-	
-	@Autowired
 	private StocksConfiguration configuration;
 	
 	@Before
 	public void setup() {
+		StocksRepositoryConcurrentHashmapImpl repository = new StocksRepositoryConcurrentHashmapImpl();
 		repository.addAll(configuration.getLoad());
 		service = new StocksServiceInMemoryImpl(repository);
 	}
@@ -49,10 +50,8 @@ public class StocksServiceInMemoryImplTest {
 		Stock stock = new Stock(0, "Stock Test", 10.0, 0);
 		stock = service.add(stock);
 		
-		long currentTs = System.currentTimeMillis();
-		
 		assertNotEquals(0, stock.getId());
-		assertTrue(stock.getLastUpdate() >= currentTs);
+		assertNotEquals(0, stock.getLastUpdate());
 	}
 	
 	@Test(expected=InvalidStockException.class)

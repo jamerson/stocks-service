@@ -2,6 +2,8 @@ package com.service.stocks.repositories;
 
 import java.util.Collection;
 
+import org.springframework.context.annotation.Profile;
+
 import com.service.stocks.model.Stock;
 import com.service.stocks.repositories.exceptions.InvalidIdException;
 
