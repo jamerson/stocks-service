@@ -1,8 +1,5 @@
 package com.service.stocks.model;
 
-import org.springframework.data.redis.core.RedisHash;
-
-@RedisHash("stock")
 public class Stock {
 	private final long id;
 	private final String name;
