@@ -42,7 +42,7 @@ public class StocksRepositoryRedisImpl implements StocksRepository {
     public void addAll(Collection<Stock> stocksToBeAdded) {
         Map<String, Stock> map = stocksToBeAdded
                 .stream()
-                .collect(Collectors.toMap(i -> String.valueOf(i.getId()), i -> i));
+                .collect(Collectors.toMap(i -> "stock:" + String.valueOf(i.getId()), i -> i));
         ops.multiSet(map);
     }
 
@@ -53,7 +53,7 @@ public class StocksRepositoryRedisImpl implements StocksRepository {
                 stock.getName(), 
                 stock.getCurrentPrice(), 
                 getCurrentTimestamp());
-        ops.setIfAbsent(String.valueOf(stockWithId.getId()), stockWithId);
+        ops.setIfAbsent("stock:" + String.valueOf(stockWithId.getId()), stockWithId);
         return stockWithId;
     }
 
@@ -64,7 +64,7 @@ public class StocksRepositoryRedisImpl implements StocksRepository {
                 stock.getName(), 
                 stock.getCurrentPrice(), 
                 getCurrentTimestamp());
-        boolean result = ops.setIfPresent(String.valueOf(updatedStock.getId()), updatedStock);
+        boolean result = ops.setIfPresent("stock:" + String.valueOf(updatedStock.getId()), updatedStock);
         if(!result)
             throw new InvalidIdException();
         return updatedStock;
@@ -72,13 +72,13 @@ public class StocksRepositoryRedisImpl implements StocksRepository {
 
     @Override
     public Collection<Stock> getAll() {
-        Set<String> keys = redisTemplate.keys("*");
+        Set<String> keys = redisTemplate.keys("stock:*");
         return ops.multiGet(keys);
     }
 
     @Override
     public Stock get(long id) throws InvalidIdException {
-        return ops.get(id);
+        return ops.get("stock:" + id);
     }
 
 }
