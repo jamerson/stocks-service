@@ -18,7 +18,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     public Docket stockApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()                 .apis(RequestHandlerSelectors.basePackage("com.service.stocks.api"))
-                .paths(PathSelectors.ant("/stocks/*"))
+                .paths(PathSelectors.any())
                 .build(); 
     }
     

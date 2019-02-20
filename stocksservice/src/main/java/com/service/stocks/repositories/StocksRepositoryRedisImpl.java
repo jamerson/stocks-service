@@ -46,28 +46,22 @@ public class StocksRepositoryRedisImpl implements StocksRepository {
         ops.multiSet(map);
     }
 
+    //TODO: remove stock:
     @Override
     public Stock add(Stock stock) {
-        Stock stockWithId = new Stock(
-                idGenerator.incrementAndGet(), 
-                stock.getName(), 
-                stock.getCurrentPrice(), 
-                getCurrentTimestamp());
-        ops.setIfAbsent("stock:" + String.valueOf(stockWithId.getId()), stockWithId);
-        return stockWithId;
+        stock.setId(idGenerator.incrementAndGet());
+        stock.setLastUpdate(getCurrentTimestamp());
+        ops.setIfAbsent("stock:" + String.valueOf(stock.getId()), stock);
+        return stock;
     }
 
     @Override
     public Stock save(Stock stock) throws InvalidIdException {
-        Stock updatedStock = new Stock(
-                stock.getId(), 
-                stock.getName(), 
-                stock.getCurrentPrice(), 
-                getCurrentTimestamp());
-        boolean result = ops.setIfPresent("stock:" + String.valueOf(updatedStock.getId()), updatedStock);
+        stock.setLastUpdate(getCurrentTimestamp());
+        boolean result = ops.setIfPresent("stock:" + String.valueOf(stock.getId()), stock);
         if(!result)
             throw new InvalidIdException();
-        return updatedStock;
+        return stock;
     }
 
     @Override

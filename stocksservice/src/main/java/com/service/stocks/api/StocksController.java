@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/stocks")
-@Api(value="Stocks Management System")
+@Api("/stocks")
 public class StocksController {
     private StocksService service;
     private StocksConfiguration configuration;
@@ -41,7 +42,7 @@ public class StocksController {
         service.addAll(configuration.getLoad());
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "View a list of stocks", response = Stock[].class)
     @ApiResponses({
         @ApiResponse(code = 200, message = "Success", response = Stock[].class)
@@ -64,7 +65,7 @@ public class StocksController {
         }
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "Create a new stock", response = Stock.class)
     @ApiResponses({
         @ApiResponse(code = 201, message = "Stock created", response = Stock.class),
@@ -92,8 +93,9 @@ public class StocksController {
     })
     public ResponseEntity<Stock> updateStock(@PathVariable long id, @RequestBody Stock stock, UriComponentsBuilder b) {
 
+        stock.setId(id);
         try {
-            stock = service.save(stock.copy(id));
+            stock = service.save(stock);
 
         } catch (InvalidStockException e) {
             return ResponseEntity.badRequest().build();

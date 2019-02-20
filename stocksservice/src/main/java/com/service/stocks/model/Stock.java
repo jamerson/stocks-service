@@ -9,10 +9,14 @@ public class Stock implements Serializable {
     private static final long serialVersionUID = -2468057406500509489L;
     
     @Id
-    private final long id;
-    private final String name;
-    private final double currentPrice;
-    private final long lastUpdate;
+    private long id;
+    private String name;
+    private double currentPrice;
+    private long lastUpdate;
+    
+    public Stock() {
+        super();
+    }
 
     public Stock(long id, String name, double currentPrice, long lastUpdate) {
         super();
@@ -26,16 +30,36 @@ public class Stock implements Serializable {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getCurrentPrice() {
         return currentPrice;
     }
 
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+
     public long getLastUpdate() {
         return lastUpdate;
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
     }
 
     @Override
@@ -64,10 +88,6 @@ public class Stock implements Serializable {
         if (id != other.id)
             return false;
         return true;
-    }
-
-    public Stock copy(long newId) {
-        return new Stock(newId, getName(), getCurrentPrice(), getLastUpdate());
     }
 
 }

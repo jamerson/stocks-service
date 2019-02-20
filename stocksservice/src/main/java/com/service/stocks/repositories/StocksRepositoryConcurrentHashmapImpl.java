@@ -32,26 +32,27 @@ public class StocksRepositoryConcurrentHashmapImpl implements StocksRepository {
 
         long stockId = idGenerator.incrementAndGet();
         long currentTs = getCurrentTimestamp();
+        
+        stock.setId(stockId);
+        stock.setLastUpdate(currentTs);
 
-        Stock newStock = new Stock(stockId, stock.getName(), stock.getCurrentPrice(), currentTs);
+        stocks.put(stockId, stock);
 
-        stocks.put(stockId, newStock);
-
-        return newStock;
+        return stock;
     }
 
     @Override
     public Stock save(Stock stock) throws InvalidIdException {
         long currentTs = getCurrentTimestamp();
 
-        Stock updatedStock = new Stock(stock.getId(), stock.getName(), stock.getCurrentPrice(), currentTs);
+        stock.setLastUpdate(currentTs);
 
-        Stock result = stocks.replace(stock.getId(), updatedStock);
+        Stock result = stocks.replace(stock.getId(), stock);
 
         if (result == null)
             throw new InvalidIdException();
 
-        return updatedStock;
+        return result;
     }
 
     @Override
