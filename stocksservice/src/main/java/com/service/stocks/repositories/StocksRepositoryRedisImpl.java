@@ -43,7 +43,7 @@ public class StocksRepositoryRedisImpl implements StocksRepository {
     public void addAll(Collection<Stock> stocksToBeAdded) {
         Map<String, Stock> map = stocksToBeAdded
                 .stream()
-                .collect(Collectors.toMap(i -> KEY + String.valueOf(i.getId()), i -> i));
+                .collect(Collectors.toMap(i -> KEY + String.valueOf(idGenerator.incrementAndGet()), i -> i));
         ops.multiSet(map);
     }
 
@@ -56,11 +56,15 @@ public class StocksRepositoryRedisImpl implements StocksRepository {
     }
 
     @Override
-    public Stock save(Stock stock) throws InvalidIdException {
+    public Stock updatePrice(long id, double newPrice) throws InvalidIdException {
+        Stock stock = get(id);
         stock.setLastUpdate(getCurrentTimestamp());
+        stock.setCurrentPrice(newPrice);
         boolean result = ops.setIfPresent(KEY + String.valueOf(stock.getId()), stock);
+        
         if(!result)
             throw new InvalidIdException();
+        
         return stock;
     }
 

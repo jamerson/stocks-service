@@ -55,9 +55,9 @@ The service provides the following endpoints:
 ### Usage
 
 - GET `/api/stocks`: Get a list of stocks: `curl http://localhost:8080/api/stocks`
-- GET `/api/stocks/{id}`: Get one stock from the list
-- PUT `/api/stocks/{id}`: Update the price of a single stock using the given payload information
-- POST `/api/stocks`: Create a stock using the given payload information
+- GET `/api/stocks/{id}`: Get one stock from the list: `curl http://localhost:8080/api/stocks/1`
+- PUT `/api/stocks/{id}`: Update the price of a single stock using the given payload information: `curl -X PUT --header "Content-Type: application/json" -d "{ \"currentPrice\": 88.0 }" http://localhost:8080/api/stocks/1`
+- POST `/api/stocks`: Create a stock using the given payload information: `curl -X POST --header "Content-Type: application/json" -d "{ \"currentPrice\": 10.0, \"name\": \"New Stock\" }" http://localhost:8080/api/stocks`
 
 The API documentation is available at `/api/swagger-ui.html`.
 

@@ -41,15 +41,18 @@ public class StocksRepositoryConcurrentHashmapImpl implements StocksRepository {
     }
 
     @Override
-    public Stock save(Stock stock) throws InvalidIdException {
+    public Stock updatePrice(long id, double newPrice) throws InvalidIdException {
+        
         long currentTs = getCurrentTimestamp();
+        
+        Stock stock = stocks.get(id);
+        
+        if (stock == null)
+            throw new InvalidIdException();
 
         stock.setLastUpdate(currentTs);
-
+        stock.setCurrentPrice(newPrice);
         Stock result = stocks.replace(stock.getId(), stock);
-
-        if (result == null)
-            throw new InvalidIdException();
 
         return result;
     }

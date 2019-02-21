@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.stocks.model.Stock;
 import com.service.stocks.services.StocksService;
-import com.service.stocks.services.exceptions.InvalidStockException;
+import com.service.stocks.services.exceptions.InvalidStockPriceException;
 import com.service.stocks.services.exceptions.StockNotFoundException;
 
 @ActiveProfiles("map")
@@ -92,7 +92,7 @@ public class StocksControllerTest {
 
         Stock stock = new Stock(0, null, 0, 0);
 
-        when(service.add(stock)).thenThrow(InvalidStockException.class);
+        when(service.add(stock)).thenThrow(InvalidStockPriceException.class);
 
         this.mockMvc.perform(post("/stocks").contentType(MediaType.APPLICATION_JSON).content("{}"))
                 .andExpect(status().isBadRequest());
@@ -103,7 +103,7 @@ public class StocksControllerTest {
 
         Stock stock = new Stock(0, null, 0, 0);
 
-        when(service.add(stock)).thenThrow(InvalidStockException.class);
+        when(service.add(stock)).thenThrow(InvalidStockPriceException.class);
 
         this.mockMvc.perform(
                 post("/stocks").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(stock)))
@@ -114,7 +114,7 @@ public class StocksControllerTest {
     public void updateStock() throws Exception {
         Stock stock = new Stock(1, "Stock 1", 10, 0);
 
-        when(service.save(stock)).thenReturn(stock);
+        when(service.updatePrice(1, 10)).thenReturn(stock);
 
         this.mockMvc.perform(
                 put("/stocks/1").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(stock)))
@@ -133,7 +133,7 @@ public class StocksControllerTest {
 
         Stock stock = new Stock(1, null, 0, 0);
 
-        when(service.save(stock)).thenThrow(InvalidStockException.class);
+        when(service.updatePrice(1, 0)).thenThrow(InvalidStockPriceException.class);
 
         this.mockMvc.perform(
                 put("/stocks/1").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(stock)))
@@ -144,7 +144,7 @@ public class StocksControllerTest {
     public void updateUnknowStock() throws Exception {
         Stock stock = new Stock(1, "Stock 1", 10, 0);
 
-        when(service.save(stock)).thenThrow(StockNotFoundException.class);
+        when(service.updatePrice(1, 10)).thenThrow(StockNotFoundException.class);
 
         this.mockMvc.perform(
                 put("/stocks/1").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(stock)))

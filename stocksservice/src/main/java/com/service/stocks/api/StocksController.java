@@ -16,7 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.service.stocks.config.StocksConfiguration;
 import com.service.stocks.model.Stock;
 import com.service.stocks.services.StocksService;
-import com.service.stocks.services.exceptions.InvalidStockException;
+import com.service.stocks.services.exceptions.InvalidStockPriceException;
 import com.service.stocks.services.exceptions.StockNotFoundException;
 
 import io.swagger.annotations.Api;
@@ -74,7 +74,7 @@ public class StocksController {
         try {
             stock = service.add(stock);
 
-        } catch (InvalidStockException e) {
+        } catch (InvalidStockPriceException e) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -94,9 +94,9 @@ public class StocksController {
 
         stock.setId(id);
         try {
-            stock = service.save(stock);
+            stock = service.updatePrice(id, stock.getCurrentPrice());
 
-        } catch (InvalidStockException e) {
+        } catch (InvalidStockPriceException e) {
             return ResponseEntity.badRequest().build();
         } catch (StockNotFoundException e) {
             return ResponseEntity.notFound().build();
