@@ -1,65 +1,90 @@
 package com.service.stocks.model;
 
-public class Stock {
-	private final long id;
-	private final String name;
-	private final double currentPrice;
-	private final long lastUpdate;
+import java.io.Serializable;
 
-	public Stock(long id, String name, double currentPrice, long lastUpdate) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.currentPrice = currentPrice;
-		this.lastUpdate = lastUpdate;
-	}
+public class Stock implements Serializable {
 
-	public long getId() {
-		return id;
-	}
+    private static final long serialVersionUID = -2468057406500509489L;
+    
+    private long id;
+    private String name;
+    private double currentPrice;
+    private long lastUpdate;
+    
+    public Stock() {
+        super();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Stock(long id, String name, double currentPrice, long lastUpdate) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.currentPrice = currentPrice;
+        this.lastUpdate = lastUpdate;
+    }
 
-	public double getCurrentPrice() {
-		return currentPrice;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public long getLastUpdate() {
-		return lastUpdate;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	@Override
-	public String toString() {
-		return "Stock [id=" + id + ", name=" + name + ", currentPrice=" + currentPrice + ", lastUpdate=" + lastUpdate
-				+ "]";
-	}
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int)id;
-		return result;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Stock other = (Stock) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
-	
-	public Stock copy(long newId) {
-		return new Stock(newId, getName(), getCurrentPrice(), getLastUpdate());
-	}
-	
+    public double getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+
+    public long getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    @Override
+    public String toString() {
+        return "Stock [id=" + id + ", name=" + name + ", currentPrice=" + currentPrice + ", lastUpdate=" + lastUpdate
+                + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) id;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Stock other = (Stock) obj;
+        if (id != other.id)
+            return false;
+        return true;
+    }
+
 }
