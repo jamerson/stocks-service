@@ -23,6 +23,7 @@ public class StocksRepositoryRedisImpl implements StocksRepository {
     private final RedisTemplate<String, Stock> redisTemplate;
     private ValueOperations<String, Stock> ops;
     private RedisAtomicLong idGenerator;
+    private final String KEY = "stock:";
     
     private long getCurrentTimestamp() {
         return System.currentTimeMillis();
@@ -42,23 +43,22 @@ public class StocksRepositoryRedisImpl implements StocksRepository {
     public void addAll(Collection<Stock> stocksToBeAdded) {
         Map<String, Stock> map = stocksToBeAdded
                 .stream()
-                .collect(Collectors.toMap(i -> "stock:" + String.valueOf(i.getId()), i -> i));
+                .collect(Collectors.toMap(i -> KEY + String.valueOf(i.getId()), i -> i));
         ops.multiSet(map);
     }
 
-    //TODO: remove stock:
     @Override
     public Stock add(Stock stock) {
         stock.setId(idGenerator.incrementAndGet());
         stock.setLastUpdate(getCurrentTimestamp());
-        ops.setIfAbsent("stock:" + String.valueOf(stock.getId()), stock);
+        ops.setIfAbsent(KEY + String.valueOf(stock.getId()), stock);
         return stock;
     }
 
     @Override
     public Stock save(Stock stock) throws InvalidIdException {
         stock.setLastUpdate(getCurrentTimestamp());
-        boolean result = ops.setIfPresent("stock:" + String.valueOf(stock.getId()), stock);
+        boolean result = ops.setIfPresent(KEY + String.valueOf(stock.getId()), stock);
         if(!result)
             throw new InvalidIdException();
         return stock;
@@ -66,13 +66,13 @@ public class StocksRepositoryRedisImpl implements StocksRepository {
 
     @Override
     public Collection<Stock> getAll() {
-        Set<String> keys = redisTemplate.keys("stock:*");
+        Set<String> keys = redisTemplate.keys(String.format("%s*", KEY));
         return ops.multiGet(keys);
     }
 
     @Override
     public Stock get(long id) throws InvalidIdException {
-        return ops.get("stock:" + id);
+        return ops.get(KEY + id);
     }
 
 }

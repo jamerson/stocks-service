@@ -2,9 +2,7 @@ package com.service.stocks.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Before;
@@ -17,10 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.service.stocks.config.StocksConfiguration;
 import com.service.stocks.model.Stock;
-import com.service.stocks.repositories.StocksRepository;
 import com.service.stocks.repositories.StocksRepositoryConcurrentHashmapImpl;
-import com.service.stocks.services.exceptions.StockNotFoundException;
-import com.service.stocks.services.exceptions.InvalidStockException;;
+import com.service.stocks.services.exceptions.InvalidStockException;
+import com.service.stocks.services.exceptions.StockNotFoundException;;
 
 @ActiveProfiles("map")
 @RunWith(SpringRunner.class)

@@ -54,7 +54,7 @@ The service provides the following endpoints:
 
 ### Usage
 
-- GET `/api/stocks`: Get a list of stocks
+- GET `/api/stocks`: Get a list of stocks: `curl http://localhost:8080/api/stocks`
 - GET `/api/stocks/{id}`: Get one stock from the list
 - PUT `/api/stocks/{id}`: Update the price of a single stock using the given payload information
 - POST `/api/stocks`: Create a stock using the given payload information
