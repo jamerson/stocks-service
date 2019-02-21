@@ -8,6 +8,7 @@ public class Stock implements Serializable {
 
     private static final long serialVersionUID = -2468057406500509489L;
     
+    //TODO: remove this annotation
     @Id
     private long id;
     private String name;

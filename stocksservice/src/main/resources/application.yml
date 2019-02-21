@@ -1,5 +1,4 @@
 stocks:
-  name: test
   load:
       stock1:  
         id: 1
