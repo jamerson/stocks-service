@@ -17,7 +17,7 @@ import com.service.stocks.model.Stock;
 import com.service.stocks.repositories.exceptions.InvalidIdException;
 
 @Repository
-@Profile("redis")
+@Profile("redis, !map")
 public class StocksRepositoryRedisImpl implements StocksRepository {
     
     private final RedisTemplate<String, Stock> redisTemplate;

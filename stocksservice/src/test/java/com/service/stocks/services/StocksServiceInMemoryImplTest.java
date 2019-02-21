@@ -22,7 +22,7 @@ import com.service.stocks.repositories.StocksRepositoryConcurrentHashmapImpl;
 import com.service.stocks.services.exceptions.StockNotFoundException;
 import com.service.stocks.services.exceptions.InvalidStockException;;
 
-@ActiveProfiles("test")
+@ActiveProfiles("map")
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class StocksServiceInMemoryImplTest {

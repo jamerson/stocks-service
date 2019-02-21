@@ -26,7 +26,7 @@ import com.service.stocks.services.StocksService;
 import com.service.stocks.services.exceptions.InvalidStockException;
 import com.service.stocks.services.exceptions.StockNotFoundException;
 
-@ActiveProfiles("test")
+@ActiveProfiles("map")
 @RunWith(SpringRunner.class)
 @WebMvcTest(StocksController.class)
 public class StocksControllerTest {

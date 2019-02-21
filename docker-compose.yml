@@ -9,6 +9,10 @@ services:
     networks:
       - mynet
   springboot:
+    environment:
+      - IN_MEM_PERSIST
+      - SPRING_PROFILES_ACTIVE  
+      - SPRING_REDIS_HOST
     image: "stocksspringboot:latest"
     build:
       context: ./stocksservice

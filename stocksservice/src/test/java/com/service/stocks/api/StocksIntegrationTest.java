@@ -90,7 +90,14 @@ public class StocksIntegrationTest {
         assertTrue(id == (int)JsonPath.read(json, "$.id"));
         assertTrue((long)JsonPath.read(json, "$.lastUpdate") > lastUpdate);
         
-        
+    }
+    
+    @Test
+    public void updateUnknowStock() throws Exception {
+        Stock stock = new Stock(1, "Stock 200", 35D, 0);
+        this.mockMvc.perform(
+                put("/stocks/2000").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(stock)))
+                .andExpect(status().isNotFound());
     }
 
 }
