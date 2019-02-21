@@ -2,19 +2,6 @@
 
 Stocks Management service using Spring Boot, Redis, Docker and Docker Compose.
 
-The service should manage a list of stocks, it should be considered as a MVP, so simplicity and fast development are a must, but without forgeting that it should be read for production.
-
-The stock market is fast paced and very volatile, so makes sense to think that the service will receive a lot of requests, that can be separated in third-party services sending requests to update stocks information and consumers retrieving stocks information. 
-
-The consumers expect to get the latest information fast, so the new stocks and updated information of available stocks should be available to be retrieved as fast as possible, the service should handle a lot of concurrent access of third-party services updating their stocks information and consumers retrieving the latest information.
-
-An REST API is provided to enable comunication with other services, the data is stored in memory for fast access.
-
-A docker compose file is provided to start the the necessary services, the possible configurations are:
-
-- __SERVICE_PORT__: The Stock service port
-- __IN_MEM_PERSIST__: The persistence method used, it can be: `map`, were the stocks are stored in a `ConcurrentHashMap` data structure, and `redis`, were the stocks are stored in a Redis server configured with in-memory persistence only.
-
 ## Prerequisites
 
 - [Docker](https://www.docker.com/)
@@ -24,9 +11,16 @@ __Note:__ To re-build the code, run the test suite or re-package the solution, [
 
 ## Getting started
 
+A docker compose file is provided to start the services, those environment variables can be used:
+
+- __SERVICE_PORT__: The Stock service port
+- __IN_MEM_PERSIST__: The persistence method used, it can be: `map`, were the stocks are stored in a `ConcurrentHashMap` data structure, and `redis`, were the stocks are stored in a Redis server configured with in-memory persistence only.
+
+Execute the following steps:
+
 1. Clone this repository
 
-2. Run the following commands on a terminal:
+2. Run the following command on a terminal:
 
 ```sh
 docker-compose up
@@ -42,7 +36,7 @@ The service will be up and running when printing a message similar to this:
 
 The service will be available in the port 8080. (this port can be changed in Docker compose file or setting the `SERVICE_PORT` environment variable).
 
-To run the service using the Hash Map persistence method, it is necessary to set the `IN_MEM_PERSIST` environment variable:
+To run the service using the Hash Map persistence method, set the `IN_MEM_PERSIST` environment variable:
 
 ```sh
 IN_MEM_PERSIST=map docker-compose up springboot
@@ -54,10 +48,10 @@ The service provides the following endpoints:
 
 ### Usage
 
-- GET `/api/stocks`: Get a list of stocks: `curl http://localhost:8080/api/stocks`
-- GET `/api/stocks/{id}`: Get one stock from the list: `curl http://localhost:8080/api/stocks/1`
-- PUT `/api/stocks/{id}`: Update the price of a single stock using the given payload information: `curl -X PUT --header "Content-Type: application/json" -d "{ \"currentPrice\": 88.0 }" http://localhost:8080/api/stocks/1`
-- POST `/api/stocks`: Create a stock using the given payload information: `curl -X POST --header "Content-Type: application/json" -d "{ \"currentPrice\": 10.0, \"name\": \"New Stock\" }" http://localhost:8080/api/stocks`
+- `GET` `/api/stocks`: Get a list of stocks: `curl http://localhost:8080/api/stocks`
+- `GET` `/api/stocks/{id}`: Get one stock from the list: `curl http://localhost:8080/api/stocks/1`
+- `PUT` `/api/stocks/{id}`: Update the price of a single stock using the given payload information: `curl -X PUT --header "Content-Type: application/json" -d "{ \"currentPrice\": 88.0 }" http://localhost:8080/api/stocks/1`
+- `POST` `/api/stocks`: Create a stock using the given payload information: `curl -X POST --header "Content-Type: application/json" -d "{ \"currentPrice\": 10.0, \"name\": \"New Stock\" }" http://localhost:8080/api/stocks`
 
 The API documentation is available at `/api/swagger-ui.html`.
 
@@ -79,9 +73,10 @@ The test files are located under `stockservice/src/test` folder.
 docker-compose up redis
 ```
 
-2. Got to `stocksservice` folder and run:
+2. Go to `stocksservice` folder and run:
 
 ```sh
+cd stocksservice
 ./mvnw integration-test
 ```
 
@@ -90,6 +85,7 @@ docker-compose up redis
 Got to `stocksservice` folder and run the following command to re-build and generate a new JAR file:
 
 ```sh
+stocksservice
 ./mvnw clean package
 ```
 

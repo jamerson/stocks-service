@@ -1,7 +1,7 @@
 version: "3"
 services:
   redis:
-    image: "stocksredis:latest"
+    image: "jamerson/stocksredis:latest"
     build:
       context: ./redis
     ports:
@@ -13,7 +13,7 @@ services:
       - IN_MEM_PERSIST
       - SPRING_PROFILES_ACTIVE  
       - SPRING_REDIS_HOST
-    image: "stocksspringboot:latest"
+    image: "jamerson/stocksspringboot:latest"
     build:
       context: ./stocksservice
       args:
