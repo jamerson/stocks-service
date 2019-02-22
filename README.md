@@ -116,5 +116,5 @@ docker-compose -f docker-compose.build.yml build --no-cache
 3. Start the containers:
 
 ```sh
-docker-compose -f docker-compose.build.yml build up
+docker-compose -f docker-compose.build.yml up
 ```
