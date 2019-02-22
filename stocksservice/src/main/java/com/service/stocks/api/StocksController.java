@@ -20,9 +20,14 @@ import com.service.stocks.services.exceptions.InvalidStockPriceException;
 import com.service.stocks.services.exceptions.StockNotFoundException;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ExampleProperty;
+import io.swagger.annotations.Example;
 
 @RestController
 @RequestMapping("/stocks")
@@ -70,7 +75,10 @@ public class StocksController {
         @ApiResponse(code = 201, message = "Stock created", response = Stock.class),
         @ApiResponse(code = 400, message = "Inconsistent input data")
     })
-    public ResponseEntity<Stock> addNewStock(@RequestBody Stock stock, UriComponentsBuilder b) {
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "new stock", value = "{ \"currentPrice\": 10.0, \"name\": \"New Stock\" }", required = true, paramType = "body", examples = @Example(value = {@ExampleProperty(mediaType = "application/json" ,value = "{ \"currentPrice\": 10.0, \"name\": \"New Stock\" }")}))
+    })
+    public ResponseEntity<Stock> addNewStock(@ApiParam(name = "new stock", value = "{ \"currentPrice\": 10.0, \"name\": \"New Stock\" }") @RequestBody Stock stock, UriComponentsBuilder b) {
         try {
             stock = service.add(stock);
 
@@ -84,13 +92,16 @@ public class StocksController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    @ApiOperation(value = "Update an existing stock", response = Stock.class)
+    @ApiOperation(value = "Update the price of an existing stock", response = Stock.class)
     @ApiResponses({
         @ApiResponse(code = 200, message = "Success", response = Stock.class),
         @ApiResponse(code = 400, message = "Incosistent input data"),
         @ApiResponse(code = 404, message = "Stock not found")
     })
-    public ResponseEntity<Stock> updateStock(@PathVariable long id, @RequestBody Stock stock, UriComponentsBuilder b) {
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "new price", value = "{ \"currentPrice\": 88.0 }", required = true, paramType = "body", examples = @Example(value = {@ExampleProperty(mediaType = "application/json" ,value = "{ \"currentPrice\": 88.0 }")}))
+    })
+    public ResponseEntity<Stock> updateStock(@PathVariable long id, @ApiParam(name = "new price", value = "{ \"currentPrice\": 88.0 }") @RequestBody Stock stock, UriComponentsBuilder b) {
 
         stock.setId(id);
         try {
