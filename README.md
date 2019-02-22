@@ -73,21 +73,26 @@ The test files are located under `stockservice/src/test` folder.
 docker-compose up redis
 ```
 
-2. Go to `stocksservice` folder and run:
+2. Get the assigned port of the Redis instance:
+ 
+```sh
+docker ps
+```
+
+3. Go to `stocksservice` folder and run:
 
 ```sh
 cd stocksservice
-./mvnw integration-test
+DB_HOST=localhost DB_PORT=<PORT> ./mvnw integration-test
 ```
 
 ## Building
 
-Another compose file is provided to build new images, go to `stocksservice` folder and run the following command to re-build and generate a new JAR file:
+Another compose file is provided to build new images(`docker-compose.build.yml build --no-cache`), go to `stocksservice` folder and run the following command to re-build and generate a new JAR file:
 
 ```sh
 stocksservice
 ./mvnw clean package
-docker-compose -f docker-compose.build.yml build --no-cache
 ```
 
 A new `./target/stocks-service-service-1.0-SNAPSHOT.jar` will be created. After that the `springboot` image needs to be recreated.
@@ -101,7 +106,7 @@ docker-compose down
 2. Rebuild the images:
 
 ```sh
-docker-compose build --no-cache
+docker-compose -f docker-compose.build.yml build --no-cache
 ```
 
 3. Start the containers:

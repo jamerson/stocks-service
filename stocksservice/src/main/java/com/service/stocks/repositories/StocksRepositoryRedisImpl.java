@@ -58,6 +58,9 @@ public class StocksRepositoryRedisImpl implements StocksRepository {
     @Override
     public Stock updatePrice(long id, double newPrice) throws InvalidIdException {
         Stock stock = get(id);
+        if(stock == null) {
+            throw new InvalidIdException();
+        }
         stock.setLastUpdate(getCurrentTimestamp());
         stock.setCurrentPrice(newPrice);
         boolean result = ops.setIfPresent(KEY + String.valueOf(stock.getId()), stock);

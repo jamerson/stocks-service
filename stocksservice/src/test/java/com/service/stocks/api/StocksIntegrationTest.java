@@ -79,14 +79,14 @@ public class StocksIntegrationTest {
         assertTrue(id == (int)JsonPath.read(json, "$.id"));
         assertTrue(lastUpdate == (long)JsonPath.read(json, "$.lastUpdate"));
         
-        Stock updateStock = new Stock(Long.valueOf(id), "Updated Stock 100", 35D, Long.valueOf(lastUpdate));
+        Stock updateStock = new Stock(Long.valueOf(id), "Updated Stock 100", 44D, Long.valueOf(lastUpdate));
         
         json = this.mockMvc.perform(
                 put("/stocks/" + id).contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(updateStock)))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         
-        assertEquals("Updated Stock 100", JsonPath.read(json, "$.name"));
-        assertTrue(35D == (double)JsonPath.read(json, "$.currentPrice"));
+        assertEquals("Stock 100", JsonPath.read(json, "$.name"));
+        assertTrue(44D == (double)JsonPath.read(json, "$.currentPrice"));
         assertTrue(id == (int)JsonPath.read(json, "$.id"));
         assertTrue((long)JsonPath.read(json, "$.lastUpdate") > lastUpdate);
         
