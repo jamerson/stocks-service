@@ -82,11 +82,12 @@ cd stocksservice
 
 ## Building
 
-Got to `stocksservice` folder and run the following command to re-build and generate a new JAR file:
+Another compose file is provided to build new images, go to `stocksservice` folder and run the following command to re-build and generate a new JAR file:
 
 ```sh
 stocksservice
 ./mvnw clean package
+docker-compose -f docker-compose.build.yml build --no-cache
 ```
 
 A new `./target/stocks-service-service-1.0-SNAPSHOT.jar` will be created. After that the `springboot` image needs to be recreated.
