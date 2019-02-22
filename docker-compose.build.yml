@@ -2,6 +2,8 @@ version: "3"
 services:
   redis:
     image: "jamerson/stocksredis:latest"
+    build:
+      context: ./redis
     ports:
       - "127.0.0.1:${REDIS_PORT:-6379}:6379"
     networks:
@@ -12,6 +14,10 @@ services:
       - SPRING_PROFILES_ACTIVE  
       - SPRING_REDIS_HOST
     image: "jamerson/stocksspringboot:latest"
+    build:
+      context: ./stocksservice
+      args:
+        jarFile: "stocks-service-0.0.1-SNAPSHOT.jar"
     volumes:
       - $PWD:/code
     ports:
