@@ -2,23 +2,23 @@
 
 Stocks Management service using Spring Boot, Redis, Docker and Docker Compose.
 
-The service can use one of two method persistance, one that does not use any database solution. were the stocks are stored in a `ConcurrentHashMap` data structure, and another one were the stocks are stored in a Redis server configured with in-memory persistence only. 
+The service can use one of two persistence methods, one where the stocks are kept in a `ConcurrentHashMap` data structure, and another one where the stocks are stored in a Redis server configured with in-memory persistence only.
 
-The solution was containarized using Docker and compose files were provided to facilitate setup.
+The solution was containerized using Docker and compose files were provided to facilitate setup.
 
 ## Prerequisites
 
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://github.com/docker/compose)
 
-__Note:__ To re-build the code, run the test suite or re-package the solution, [Java 8](https://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html) is required. The service uses [Maven](https://maven.apache.org/) to build, run unit tests and create the target JAR file, but it is not necessary to have it installed, use the [Maven Wrapper](https://github.com/takari/maven-wrapper) binary present in project folder.
+__Note:__ To rebuild the code, run the test suite or re-package the solution [Java 8](https://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html) is required. The service uses [Maven](https://maven.apache.org/) to build, run unit tests and create the target JAR file, but it is not necessary to have it installed, use the [Maven Wrapper](https://github.com/takari/maven-wrapper) binary present in the project folder.
 
 ## Getting started
 
-A docker compose file is provided to start the services and those environment variables can be used:
+A docker compose file is provided to start the services; these environment variables are available:
 
 - __SERVICE_PORT__: The Stock service port
-- __IN_MEM_PERSIST__: The persistence method used, it can be: `map`, were the stocks are stored in a `ConcurrentHashMap` data structure, and `redis`, were the stocks are stored in a Redis server configured with in-memory persistence only.
+- __IN_MEM_PERSIST__: The persistence method used, it can be: `map`, where the stocks are stored in a `ConcurrentHashMap` data structure, and `redis`, where the stocks are stored in a Redis server configured with in-memory persistence only.
 
 Execute the following steps:
 
@@ -30,7 +30,7 @@ Execute the following steps:
 docker-compose up
 ```
 
-Compose will download the necessary images from Docker Hub and start two containers , a Redis instance and a Spring Boot instance serving the content of this repository, provided as `./target/stocks-service-0.0.1-SNAPSHOT.jar` JAR file during the image building process.
+Compose will download the necessary images from Docker Hub and start two containers, a Redis instance and a Spring Boot instance serving the content of this repository, provided as `./target/stocks-service-0.0.1-SNAPSHOT.jar` JAR file during the image building process.
 
 The service will be up and running when printing a message similar to this:
 
@@ -46,7 +46,7 @@ To run the service using the Hash Map persistence method, set the `IN_MEM_PERSIS
 IN_MEM_PERSIST=map docker-compose up springboot
 ```
 
-Sample stock data is loaded during the service startup, this information can be customized in `stockservice/application.yml` file.
+Sample stock data is loaded during the service startup. This information can be customized in `stockservice/application.yml` file.
 
 The service provides the following endpoints:
 
@@ -61,7 +61,7 @@ The full API documentation is available at `/api/swagger-ui.html`.
 
 ### Unit tests
 
-During the package creation, all unit test are executed. To re-executed them, go to `stockservice` folder and execute the following command:
+During the package creation, all unit test are executed. To re-executed them, go to `stockservice` folder and run the following command:
 
 ```sh
 ./mvnw test
@@ -71,7 +71,7 @@ The test files are located under `stockservice/src/test` folder.
 
 ### Integration tests
 
-1. The integration tests needs a Redis instance running locally. Redis container can be used, run the following command to start the container:
+1. The integration tests need a Redis instance running locally. Redis container can be used, run the following command to start the container:
 
 ```sh
 docker-compose up redis
@@ -92,14 +92,14 @@ DB_HOST=localhost DB_PORT=<PORT> ./mvnw integration-test
 
 ## Building
 
-Another compose file is provided to facilitate the image building process (`docker-compose.build.yml build --no-cache`), go to `stocksservice` folder and run the following command to re-build and generate a new JAR file:
+Another compose file is provided to facilitate the image building process (`docker-compose.build.yml build --no-cache`), go to `stocksservice` folder and run the following command to rebuild and generate a new JAR file:
 
 ```sh
 stocksservice
 ./mvnw clean package
 ```
 
-A new `stocksservice/target/stocks-service-service-1.0-SNAPSHOT.jar` will be created. After that the `springboot` image needs to be recreated.
+A new `stocksservice/target/stocks-service-service-1.0-SNAPSHOT.jar` will be created. After that, the `springboot` image needs to be recreated.
 
 1. Stop and destroy the current containers, first:
 
